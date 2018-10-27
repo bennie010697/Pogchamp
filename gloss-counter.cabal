@@ -9,6 +9,11 @@ cabal-version:       >=1.10
 
 executable gloss-counter
   main-is:             Main.hs
+  other-modules:	   Variables,
+                       Controller,
+                       Level,
+                       Model,
+                       View
   build-depends:       base >= 4 && < 5,
                        gloss,
                        random
