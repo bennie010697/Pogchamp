@@ -37,13 +37,18 @@ input e gstate | state gstate == Menu = menuHelpKeys e gstate
 menuHelpKeys :: Event -> GameState -> IO GameState
 menuHelpKeys (EventKey (SpecialKey c) Down _ _) gstate
              | c == KeyEnter  = do
-                                let state = PausedState Paused getGameOver
+                                startlvl <- makeNewLevel
+                                let state = LevelState Level startlvl
                                 return state
              |otherwise       = return gstate
 
 menuHelpKeys _ gstate = return gstate
 
-
+makeNewLevel :: IO LevelData
+makeNewLevel = do
+               levelBoard <- loadLevelFromFile
+               let state = LevelData levelBoard
+               return state
 {-inputKey :: Event -> GameState -> GameState
 inputKey e gstate = case state gstate of
             _ -> -}

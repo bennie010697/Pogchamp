@@ -25,10 +25,10 @@ getGraySquare :: IO Picture
 getGraySquare = loadBMP "pictures/graySquare.png"
 
 getBlueSquare :: IO Picture
-getBlueSquare = loadBMP "pictures/blueSquare.png"
+getBlueSquare = loadBMP "pictures/blueSquare.bmp"
 
 getRedSquare :: IO Picture
-getRedSquare = loadBMP "pictures/redSquare.png"
+getRedSquare = loadBMP "pictures/redSquare.bmp"
 
 getGameOver :: IO Picture
 getGameOver = loadBMP "pictures/GameOver.bmp"
