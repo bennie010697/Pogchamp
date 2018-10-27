@@ -44,28 +44,6 @@
   (major1) == 1 && (major2) == 1 && (minor) <= 0)
 #endif /* MIN_VERSION_random */
 
-/* package GLUT-2.7.0.14 */
-#ifndef VERSION_GLUT
-#define VERSION_GLUT "2.7.0.14"
-#endif /* VERSION_GLUT */
-#ifndef MIN_VERSION_GLUT
-#define MIN_VERSION_GLUT(major1,major2,minor) (\
-  (major1) <  2 || \
-  (major1) == 2 && (major2) <  7 || \
-  (major1) == 2 && (major2) == 7 && (minor) <= 0)
-#endif /* MIN_VERSION_GLUT */
-
-/* package StateVar-1.1.1.1 */
-#ifndef VERSION_StateVar
-#define VERSION_StateVar "1.1.1.1"
-#endif /* VERSION_StateVar */
-#ifndef MIN_VERSION_StateVar
-#define MIN_VERSION_StateVar(major1,major2,minor) (\
-  (major1) <  1 || \
-  (major1) == 1 && (major2) <  1 || \
-  (major1) == 1 && (major2) == 1 && (minor) <= 1)
-#endif /* MIN_VERSION_StateVar */
-
 /* tool alex-3.2.1 */
 #ifndef TOOL_VERSION_alex
 #define TOOL_VERSION_alex "3.2.1"
@@ -76,17 +54,6 @@
   (major1) == 3 && (major2) <  2 || \
   (major1) == 3 && (major2) == 2 && (minor) <= 1)
 #endif /* MIN_TOOL_VERSION_alex */
-
-/* tool cpphs-1.20.8 */
-#ifndef TOOL_VERSION_cpphs
-#define TOOL_VERSION_cpphs "1.20.8"
-#endif /* TOOL_VERSION_cpphs */
-#ifndef MIN_TOOL_VERSION_cpphs
-#define MIN_TOOL_VERSION_cpphs(major1,major2,minor) (\
-  (major1) <  1 || \
-  (major1) == 1 && (major2) <  20 || \
-  (major1) == 1 && (major2) == 20 && (minor) <= 8)
-#endif /* MIN_TOOL_VERSION_cpphs */
 
 /* tool gcc-6.2.0 */
 #ifndef TOOL_VERSION_gcc
@@ -175,17 +142,6 @@
   (major1) == 1 && (major2) <  24 || \
   (major1) == 1 && (major2) == 24 && (minor) <= 0)
 #endif /* MIN_TOOL_VERSION_hscolour */
-
-/* tool pkg-config-0.29.1 */
-#ifndef TOOL_VERSION_pkg_config
-#define TOOL_VERSION_pkg_config "0.29.1"
-#endif /* TOOL_VERSION_pkg_config */
-#ifndef MIN_TOOL_VERSION_pkg_config
-#define MIN_TOOL_VERSION_pkg_config(major1,major2,minor) (\
-  (major1) <  0 || \
-  (major1) == 0 && (major2) <  29 || \
-  (major1) == 0 && (major2) == 29 && (minor) <= 1)
-#endif /* MIN_TOOL_VERSION_pkg_config */
 
 /* tool runghc-8.2.1 */
 #ifndef TOOL_VERSION_runghc
