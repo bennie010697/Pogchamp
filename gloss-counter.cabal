@@ -14,7 +14,9 @@ executable gloss-counter
                        gloss,
                        random,
                        GLUT,
-                       StateVar
+                       StateVar,
+                       bytestring,
+                       directory
   hs-source-dirs:      src
   ghc-options:         
     -threaded
