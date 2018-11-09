@@ -13,6 +13,9 @@ type Row = [Field]
 -- Board : A list of rows
 type Board = [Row]
 
+tileSize :: Int
+tileSize = 100
+
 
 --List of pictures needed for games (sprites)
 getGreenSquare :: IO Picture
@@ -30,9 +33,13 @@ getBlueSquare = loadBMP "pictures/blueSquare.bmp"
 getRedSquare :: IO Picture
 getRedSquare = loadBMP "pictures/redSquare.bmp"
 
+getBlackSquare :: IO Picture
+getBlackSquare = loadBMP "pictures/blackSquare.bmp"
+
 getGameOver :: IO Picture
 getGameOver = loadBMP "pictures/GameOver.bmp"
 
 getMainMenuBackground :: IO Picture
 getMainMenuBackground = loadBMP "pictures/MainMenu.bmp"
+
 

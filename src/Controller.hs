@@ -49,6 +49,7 @@ makeNewLevel = do
                levelBoard <- loadLevelFromFile
                let state = LevelData levelBoard
                return state
+               
 {-inputKey :: Event -> GameState -> GameState
 inputKey e gstate = case state gstate of
             _ -> -}
