@@ -23,6 +23,6 @@ data GameState = MenuState { state :: StateName , background :: IO Picture}
                  | PausedState { state :: StateName , background :: IO Picture}
                  | LevelState { state :: StateName , leveldata :: LevelData}
 
-data LevelData = LevelData {lboard :: Board}              
+data LevelData = LevelData {lboard :: Board, lNextMove :: Direction, lPacman :: Pacman}              
 initialState :: GameState
 initialState = MenuState {state = Menu, background = getMainMenuBackground}

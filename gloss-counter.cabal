@@ -10,6 +10,7 @@ cabal-version:       >=1.10
 executable gloss-counter
   main-is:             Main.hs
   other-modules:	   Variables,
+                       Pacman,
                        Controller,
                        Level,
                        Model,
