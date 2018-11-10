@@ -27,7 +27,10 @@ step secs gstate
     return $ gstate { elapsedTime = elapsedTime gstate + secs }-}
 
 step :: Float -> GameState -> IO GameState
-step _ gstate = return $ gstate
+step _ gstate | state gstate == Level = return $ handleLevelLoop gstate 
+              | otherwise = return $ gstate
+handleLevelLoop :: GameState -> GameState
+handleLevelLoop gstate = gstate {leveldata = makePacMove (leveldata gstate)}
 
 
     -- | Handle user input

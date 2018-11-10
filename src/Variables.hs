@@ -30,6 +30,7 @@ data Position = Position {x :: Float, y :: Float}
             deriving (Show, Eq)
 
 data Direction = DLeft | DUp | DRight | DDown
+                deriving (Show, Eq)
 
 data Pacman = Pacman {pacspeed :: Speed, pacmovement :: Movement}
 
@@ -47,6 +48,9 @@ getPacSpawn b = Position {x = fromIntegral (fst (isPacSpawnLocation b)), y = fro
 
 
 --List of pictures needed for games (sprites)
+type Sprites = [IO Picture]
+Sprites = getFruitSquare : getBlueSquare : getBlackSquare : []
+
 getFruitSquare :: IO Picture
 getFruitSquare = loadBMP "pictures/Fruit.bmp"
 
@@ -67,5 +71,7 @@ getMainMenuBackground = loadBMP "pictures/MainMenu.bmp"
 
 getPacMan1 :: IO Picture
 getPacMan1 = loadBMP "pictures/pacman.bmp"
+
+
 
 
