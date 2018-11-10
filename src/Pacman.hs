@@ -8,7 +8,7 @@ import Data.Maybe
 import Data.List
 
 newPacman ::Board -> Pacman
-newPacman b = Pacman {pacspeed = 0.01 , pacmovement = startPacMove b}
+newPacman b = Pacman {pacspeed = 0.04 , pacmovement = startPacMove b}
 
 startPacMove :: Board -> Movement
 startPacMove b = Movement {hpos = getPacSpawn b, npos = getPacSpawn b}

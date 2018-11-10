@@ -78,7 +78,7 @@ drawField :: Field -> IO Picture
 drawField WallField         = getBlueSquare
 drawField PowerField        = getBlackSquare
 drawField EmptyField        = getBlackSquare
-drawField CoinField         = head Sprites
+drawField CoinField         = getFruitSquare
 drawField PacSpawnField     = getBlackSquare
 drawField BonusField        = getBlackSquare
 drawField EnemySpawnField   = getBlackSquare

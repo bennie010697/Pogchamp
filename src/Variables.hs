@@ -48,8 +48,7 @@ getPacSpawn b = Position {x = fromIntegral (fst (isPacSpawnLocation b)), y = fro
 
 
 --List of pictures needed for games (sprites)
-type Sprites = [IO Picture]
-Sprites = getFruitSquare : getBlueSquare : getBlackSquare : []
+
 
 getFruitSquare :: IO Picture
 getFruitSquare = loadBMP "pictures/Fruit.bmp"
