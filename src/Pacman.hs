@@ -13,7 +13,6 @@ newPacman b = Pacman {pacspeed = 0.04 , pacmovement = startPacMove b}
 startPacMove :: Board -> Movement
 startPacMove b = Movement {hpos = getPacSpawn b, npos = getPacSpawn b}
 
-
 makePacMove :: LevelData -> LevelData
 makePacMove l@(LevelData{lNextMove = dir}) = l {lPacman = huidigePacman{pacmovement = moveUnit huidigePacMove huidigePacSpeed dir}}
                 where huidigePacSpeed = pacspeed $ lPacman $ l

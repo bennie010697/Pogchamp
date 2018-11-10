@@ -32,7 +32,24 @@ data Position = Position {x :: Float, y :: Float}
 data Direction = DLeft | DUp | DRight | DDown
                 deriving (Show, Eq)
 
-data Pacman = Pacman {pacspeed :: Speed, pacmovement :: Movement}
+data Pacman = Pacman { pacspeed :: Speed
+                     , pacmovement :: Movement
+                     }
+
+data EnemyType = Blinky -- rood  - nadert Pacman en volgt daarna spoor Pacman
+               | Pinky  -- roze  - zoekt route naar blokje naast Pacman
+               | Inky   -- blauw - beslist iedere ronde of hij naar Pacman toe loopt of van hem af
+               | Clyde  -- geel  - nadert Pacman en zoekt daarna linkerbenedenhoek (x = 0, y = board.height)
+
+data EnemyState = Hunts
+                | RunsAway
+                | Dead
+
+data Enemy = Enemy { etype     :: EnemyType
+                   , estate    :: EnemyState
+                   , espeed    :: Speed
+                   , emovement :: Movement
+                   }
 
 --list of things to find in the world
 isPacSpawn :: Field -> Bool
@@ -46,6 +63,16 @@ isPacSpawnLocation b = (x , y)
 getPacSpawn :: Board -> Position
 getPacSpawn b = Position {x = fromIntegral (fst (isPacSpawnLocation b)), y = fromIntegral (snd (isPacSpawnLocation b))}
 
+isEnemySpawn :: Field -> Bool
+isEnemySpawn f = f == EnemySpawnField
+
+isEnemySpawnLocation :: Board -> (Int, Int)
+isEnemySpawnLocation b = (x, y)
+    where x = fromJust (elemIndex EnemySpawnField (b !! y))
+          y = fromJust (elemIndex (head ([x | x <- b, elem EnemySpawnField x])) b)
+
+getEnemySpawn :: Board -> Position
+getEnemySpawn b = Position {x = fromIntegral (fst (isEnemySpawnLocation b)), y = fromIntegral (snd (isEnemySpawnLocation b))}
 
 --List of pictures needed for games (sprites)
 
