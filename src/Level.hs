@@ -21,3 +21,13 @@ loadLevelFromFile = do
                     let rows = map getRows splitString
                     return $ rows
                         where getRows x = map getField x
+
+--getFruitList : Returns a list of all fruitFields.
+getFruitList :: Int -> Board -> [(Int,Int)]
+getFruitList _ []       = []
+getFruitList y (x:xs)   = rowfunct 0 y x ++ getFruitList (y + 1) xs
+
+rowfunct :: Int -> Int -> Row -> [(Int , Int)]
+rowfunct _ _ []         = []
+rowfunct x y (z:zs)     | z == CoinField = (x , y) : rowfunct (x + 1) y zs
+                        | otherwise      = rowfunct (x + 1) y zs

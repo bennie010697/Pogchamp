@@ -13,27 +13,47 @@ view :: GameState -> IO Picture
 view gstate = case state gstate of
   Menu    -> getMainMenuBackground
   Paused  -> getGameOver
+  EndScreen -> do
+    _gameoverpic <- getGameOver
+    return $ pictures (_gameoverpic : (translate (-250) (250) (color red (text ("Score: " ++ show (eindscore $ gstate ))))):  [])
+    
   Level   -> do
-    _background   <- (drawBackGround levelBoard)
+    _background   <- (drawBackGround levelBoard gstate)
     let _finalBackground = translator (pictures (map pictures (helperPositions 0 _background levelBoard))) levelBoard 
     --let _enemies      =
-    --let _ui           = ShowNothing
-    _player       <- (drawPacMan (leveldata gstate))
-    let _finalplayer     = translator _player levelBoard
-    let finalPicture    = pictures (_finalBackground : _finalplayer : [])
+    let _ui           = translator (drawUIScore gstate) levelBoard
+    _fruithappjes <- drawFruits gstate
+    let _finalfruithappjes = translator (pictures _fruithappjes) levelBoard 
+    _player       <- (drawPacMan gstate (leveldata gstate))
+    let _finalplayer     = translator _player levelBoard 
+    let finalPicture    = pictures (_finalBackground : _finalplayer : _finalfruithappjes : _ui : [])
     let scaler  = scale (10 / fromIntegral (noOfColumns levelBoard)) (8 / fromIntegral (noOfRows levelBoard)) finalPicture
     return scaler
     where levelBoard = (lboard $ leveldata gstate)
 
 --_background [[picture]]
+drawUIScore :: GameState -> Picture
+drawUIScore g = translate 50 (-150) (color red (text ("Score: " ++ show (lScore $ leveldata $ g))))
 
-drawPacMan :: LevelData -> IO Picture
-drawPacMan LevelData{lPacman = pacman} = do 
-                    _pacpicture <- getPacMan1
+
+drawPacMan :: GameState -> LevelData -> IO Picture
+drawPacMan g LevelData{lPacman = pacman, ltick = tick} = do 
+                    _pacpicture <- getPic tick g
                     return (translate x y _pacpicture)
           where x = (fromIntegral tileSize) * (getXLocation (pacmovement pacman))
                 y = (fromIntegral tileSize) * (-(getYLocation (pacmovement pacman)))
-                    
+
+getPic :: Bool -> GameState -> IO Picture
+getPic True g = sprites g !! 4
+getPic False g = sprites g !! 5
+
+drawFruits :: GameState ->  IO [Picture]
+drawFruits g@(LevelState{leveldata = ldata}) = do
+                  _fruitsprite <- (sprites g !! 0)
+                  return $ (flip draw _fruitsprite) <$> list
+            where draw (x,y) = Translate (x * fromIntegral tileSize) ((-y) * fromIntegral tileSize)
+                  list = (\(x,y) -> (fromIntegral x, fromIntegral y)) <$> lfruitlist ldata
+                  
 
 getXLocation :: Movement -> Float
 getXLocation m  = x (hpos m)
@@ -44,8 +64,8 @@ getYLocation m =  y (hpos m)
 makeIOPictures :: [IO Picture] -> IO Picture
 makeIOPictures = foldr (\p q -> (<>) <$> p <*> q) (return blank)
 
-drawBackGround :: Board -> IO [[Picture]]
-drawBackGround board = sequence $ sequence <$> (map (map drawField) board)
+drawBackGround :: Board -> GameState -> IO [[Picture]]
+drawBackGround board g = sequence $ sequence <$> (map (map (drawField g)) board)
 
 --translator : Positions the given picture correctly on the screen
 translator :: Picture -> Board -> Picture
@@ -74,12 +94,12 @@ noOfColumns :: Board -> Int
 noOfColumns b = length (head b)
 
 --drawField : draws the appropiate picture for a field
-drawField :: Field -> IO Picture
-drawField WallField         = getBlueSquare
-drawField PowerField        = getBlackSquare
-drawField EmptyField        = getBlackSquare
-drawField CoinField         = getFruitSquare
-drawField PacSpawnField     = getBlackSquare
-drawField BonusField        = getBlackSquare
-drawField EnemySpawnField   = getBlackSquare
+drawField :: GameState -> Field -> IO Picture
+drawField g WallField       = sprites g !! 1
+drawField g PowerField      = sprites g !! 3
+drawField g EmptyField      = sprites g !! 3
+drawField g CoinField       = sprites g !! 3 
+drawField g PacSpawnField   = sprites g !! 3
+drawField g BonusField      = sprites g !! 3
+drawField g EnemySpawnField = sprites g !! 3
        

@@ -78,25 +78,29 @@ getEnemySpawn b = Position {x = fromIntegral (fst (isEnemySpawnLocation b)), y =
 
 
 getFruitSquare :: IO Picture
-getFruitSquare = loadBMP "pictures/Fruit.bmp"
+getFruitSquare = return $ translate 50 50 $ Color yellow $ circleSolid 20
 
 getBlueSquare :: IO Picture
-getBlueSquare = loadBMP "pictures/blueSquare.bmp"
+getBlueSquare = return $ Color blue $ polygon [(0,0),(100,0),(100,100),(0,100)]
 
 getRedSquare :: IO Picture
-getRedSquare = loadBMP "pictures/redSquare.bmp"
+getRedSquare = return $ Color red $ polygon [(0,0),(100,0),(100,100),(0,100)]
 
 getBlackSquare :: IO Picture
-getBlackSquare = loadBMP "pictures/blackSquare.bmp"
+getBlackSquare = return $ Color black $ polygon [(0,0),(100,0),(100,100),(0,100)]
 
 getGameOver :: IO Picture
-getGameOver = loadBMP "pictures/GameOver.bmp"
+getGameOver = loadBMP "pictures/GameOver.bmp" 
 
 getMainMenuBackground :: IO Picture
 getMainMenuBackground = loadBMP "pictures/MainMenu.bmp"
 
 getPacMan1 :: IO Picture
-getPacMan1 = loadBMP "pictures/pacman.bmp"
+getPacMan1 = --loadBMP "pictures/pacman.bmp"
+            return $ pictures $ Color black (polygon [(0,0),(100,0),(100,100),(0,100)]) : translate 50 50 (Color yellow (circleSolid 30)) : Color black (polygon [(50,50),(90,60),(90,40)])  : []
+
+getPacMan2 :: IO Picture
+getPacMan2 = return $ pictures $ Color black (polygon [(0,0),(100,0),(100,100),(0,100)]) : translate 50 50 (Color yellow (circleSolid 30)) : Color black (polygon [(50,50),(90,90),(90,10)])  : []
 
 
 
