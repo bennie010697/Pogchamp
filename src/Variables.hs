@@ -42,13 +42,15 @@ data EnemyType = Blinky -- rood  - nadert Pacman en volgt daarna spoor Pacman
                | Clyde  -- geel  - nadert Pacman en zoekt daarna linkerbenedenhoek (x = 0, y = board.height)
 
 data EnemyState = Hunts
-                | RunsAway
-                | Dead
+                | MovesRandom
+                deriving (Show, Eq)  
 
 data Enemy = Enemy { etype     :: EnemyType
                    , estate    :: EnemyState
                    , espeed    :: Speed
                    , emovement :: Movement
+                   , edir      :: Direction
+                   , enextdir  :: Direction
                    }
 
 --list of things to find in the world
@@ -71,8 +73,8 @@ isEnemySpawnLocation b = (x, y)
     where x = fromJust (elemIndex EnemySpawnField (b !! y))
           y = fromJust (elemIndex (head ([x | x <- b, elem EnemySpawnField x])) b)
 
-getEnemySpawn :: Board -> Position
-getEnemySpawn b = Position {x = fromIntegral (fst (isEnemySpawnLocation b)), y = fromIntegral (snd (isEnemySpawnLocation b))}
+getEnemySpawn :: Board -> Int -> Position
+getEnemySpawn b i= Position {x = fromIntegral ((fst (isEnemySpawnLocation b)) + i), y = fromIntegral (snd (isEnemySpawnLocation b))}
 
 --List of pictures needed for games (sprites)
 
@@ -94,6 +96,9 @@ getGameOver = loadBMP "pictures/GameOver.bmp"
 
 getMainMenuBackground :: IO Picture
 getMainMenuBackground = loadBMP "pictures/MainMenu.bmp"
+
+getPauseBackground :: IO Picture
+getPauseBackground = loadBMP "pictures/Paused.bmp"
 
 getPacMan1 :: IO Picture
 getPacMan1 = --loadBMP "pictures/pacman.bmp"

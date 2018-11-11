@@ -12,7 +12,7 @@ import Data.Foldable
 view :: GameState -> IO Picture
 view gstate = case state gstate of
   Menu    -> getMainMenuBackground
-  Paused  -> getGameOver
+  Paused  -> getPauseBackground
   EndScreen -> do
     _gameoverpic <- getGameOver
     return $ pictures (_gameoverpic : (translate (-250) (250) (color red (text ("Score: " ++ show (eindscore $ gstate ))))):  [])
@@ -20,13 +20,14 @@ view gstate = case state gstate of
   Level   -> do
     _background   <- (drawBackGround levelBoard gstate)
     let _finalBackground = translator (pictures (map pictures (helperPositions 0 _background levelBoard))) levelBoard 
-    --let _enemies      =
     let _ui           = translator (drawUIScore gstate) levelBoard
     _fruithappjes <- drawFruits gstate
     let _finalfruithappjes = translator (pictures _fruithappjes) levelBoard 
     _player       <- (drawPacMan gstate (leveldata gstate))
     let _finalplayer     = translator _player levelBoard 
-    let finalPicture    = pictures (_finalBackground : _finalplayer : _finalfruithappjes : _ui : [])
+    _Enemy        <- (drawEnemies (leveldata gstate))
+    let finalEnemy      = translator _Enemy levelBoard
+    let finalPicture    = pictures (_finalBackground : _finalplayer : _finalfruithappjes : finalEnemy : _ui : [])
     let scaler  = scale (10 / fromIntegral (noOfColumns levelBoard)) (8 / fromIntegral (noOfRows levelBoard)) finalPicture
     return scaler
     where levelBoard = (lboard $ leveldata gstate)
@@ -35,6 +36,20 @@ view gstate = case state gstate of
 drawUIScore :: GameState -> Picture
 drawUIScore g = translate 50 (-150) (color red (text ("Score: " ++ show (lScore $ leveldata $ g))))
 
+drawEnemies :: LevelData -> IO Picture
+drawEnemies LevelData{lenemylist = l} = do
+                              _picturelist <- drawEnemiesRecursion l
+                              return $ pictures $ _picturelist
+                      
+drawEnemiesRecursion :: [Enemy] -> IO [Picture]
+drawEnemiesRecursion [] = return []
+drawEnemiesRecursion (z:zs) = do 
+                      _enemyPicture <- getRedSquare
+                      _recursivePicture <- drawEnemiesRecursion zs
+                      let _pictures = (translate ((fromIntegral tileSize) * x) ((fromIntegral tileSize) * (-y)) _enemyPicture) : _recursivePicture
+                      return $ _pictures
+                  where x = getXLocation (emovement z)
+                        y = getYLocation (emovement z)
 
 drawPacMan :: GameState -> LevelData -> IO Picture
 drawPacMan g LevelData{lPacman = pacman, ltick = tick} = do 

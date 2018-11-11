@@ -31,3 +31,12 @@ rowfunct :: Int -> Int -> Row -> [(Int , Int)]
 rowfunct _ _ []         = []
 rowfunct x y (z:zs)     | z == CoinField = (x , y) : rowfunct (x + 1) y zs
                         | otherwise      = rowfunct (x + 1) y zs
+
+getWallList :: Int -> Board -> [(Int,Int)]
+getWallList _ []       = []
+getWallList y (x:xs)   = rowfunctWalls 0 y x ++ getWallList (y + 1) xs  
+
+rowfunctWalls :: Int -> Int -> Row -> [(Int , Int)]
+rowfunctWalls _ _ []         = []
+rowfunctWalls x y (z:zs)     | z == WallField = (x , y) : rowfunctWalls (x + 1) y zs
+                             | otherwise      = rowfunctWalls (x + 1) y zs

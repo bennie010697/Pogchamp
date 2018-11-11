@@ -21,11 +21,11 @@ nO_SECS_BETWEEN_CYCLES :: Float
 nO_SECS_BETWEEN_CYCLES = 5
 
 data GameState = MenuState { state :: StateName , background :: IO Picture, sprites :: [IO Picture]}
-                 | PausedState { state :: StateName , background :: IO Picture, sprites :: [IO Picture]}
+                 | PausedState { state :: StateName , background :: IO Picture, sprites :: [IO Picture], leveldata :: LevelData}
                  | LevelState { state :: StateName , leveldata :: LevelData, sprites :: [IO Picture]}
-                 | EndScreenState {state :: StateName, eindscore :: Int}
+                 | EndScreenState {state :: StateName, eindscore :: Int, sprites :: [IO Picture]}
 
-data LevelData = LevelData {lboard :: Board, lNextMove :: Direction, lPacman :: Pacman, ltick :: Bool, lfruitlist :: [(Int, Int)], lScore :: Int}              
+data LevelData = LevelData {lboard :: Board, lNextMove :: Direction, ldirection :: Direction, lPacman :: Pacman, ltick :: Bool, lfruitlist :: [(Int, Int)], lScore :: Int, lwalllist :: [(Int, Int)], lenemylist :: [Enemy], llives :: Int, lgen :: StdGen}              
 initialState :: GameState
 initialState = MenuState {state = Menu, background = getMainMenuBackground, sprites = getSprites}
 
